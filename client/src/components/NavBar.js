@@ -29,7 +29,7 @@ const NavBar = () => {
           <li>
             <details>
               <summary>تەوەرەی تایبەت بەخۆت</summary>
-              <ul className="bg-base-100 rounded-t-none p-2">
+              <ul className="bg-base-100 rounded-t-none p-2 max-h-80 overflow-y-auto min-w-fit overflow-x-hidden">
                 {themes.map((theme, index) => (
                   <li
                     className={twMerge(

@@ -1,11 +1,12 @@
 {
   "name": "peywane",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node peywane-t.js"
+    "start": "node server.js"
   }
 ,
+  "main": "app/server.js",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",

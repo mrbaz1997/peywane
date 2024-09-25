@@ -4,8 +4,8 @@ const cors = require('cors');
 
 dotenv.config();
 
-const authRoutes = require('../routes/authRoutes');
-const wordRoutes = require('../routes/wordRoutes');
+const authRoutes = require('./routes/authRoutes');
+const wordRoutes = require('./routes/wordRoutes');
 
 const app = express();
 

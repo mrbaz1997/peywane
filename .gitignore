@@ -12,12 +12,10 @@ yarn-error.log*
 .env
 
 # Dependency directories
-node_modules/
 bower_components/
 
 # Production files
-dist/
-build/
+#dist/
 
 # Database
 *.sqlite
@@ -55,9 +53,10 @@ lib-cov/
 /.next
 /.nuxt
 /target/
-/public/
 /out/
 /functions/
+
+# Ignoring the root public folder but allowing client/public folder
 
 # Miscellaneous
 *.log

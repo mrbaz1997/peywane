@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app/server.js",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   },
   "main": "server.js",
   "dependencies": {

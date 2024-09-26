@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { networkLogin } from "./../../network/auth";
+import { networkLogin } from "../../network/auth";
 import { useNavigate, useNavigation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
@@ -19,14 +19,30 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await networkLogin(formData);
-      if (response.status === 200) {
-        navigate("/");
-        return;
+      const token = response.data.token || response.headers["Authorization"];
+
+      if (token) {
+        localStorage.setItem("jwtToken", token); // Save token in localStorage
+        await
+        navigate("/word/سەرما"); // Redirect to home page
+      } else {
+        console.error("Token not found in response");
+       // setError("apiError", { message: "ناتوانرێت بچێتە ژوورەوە." });
       }
     } catch (error) {
-      console.error(error);
+      if (error.response) {
+        console.error("Login failed with status:", error.response.status);
+        console.error("Response data:", error.response.data);
+        /*setError("apiError", {
+          message: "ئیمەیڵ یان وشەی نهێنی هەڵەیە.",
+        });*/
+      } else {
+        console.error("An error occurred:", error.message);
+        // setError("apiError", { message: "هەڵە ڕوویدا، تکایە دوبارە هەوڵ بدە." });
+      }
+    } finally {
+      setIsLoading(false); // Always reset the loading state after the try/catch
     }
-    navigate("/word/newkabrane");
   };
 
   const isShowLoading = pageState !== "idle" || isLoading;

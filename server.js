@@ -1,3 +1,5 @@
+console.log("Running from directory: ", __dirname);
+
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');

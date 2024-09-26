@@ -36,8 +36,6 @@ Thumbs.db
 *.sublime-project
 
 # npm specific files
-package-lock.json
-yarn.lock
 
 # Coverage reports
 coverage/

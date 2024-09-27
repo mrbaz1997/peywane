@@ -5,9 +5,11 @@
   "scripts": {
     "start": "node server.js",
     "client": "cd client && npm start",
+    "build": "npm run install-client && cd client && npm run build",
+    "install-client": "cd client && npm install",
     "dev": "concurrently \"npm run start\" \"npm run client\"",
     "test": "jest --passWithNoTests",
-    "build": "cd client && npm run build"
+    "postinstall": "npm run build"
   },
   "main": "server.js",
   "dependencies": {

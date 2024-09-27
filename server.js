@@ -15,6 +15,15 @@ app.use(express.json());
 app.get('/api/data', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
 });
+app.get('/', (req, res) => {
+    res.send('Welcome to the homepage');
+});
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Handle all other routes and send back the React index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 app.use('/auth', authRoutes);
 app.use('/words', wordRoutes);
 

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import BackdropImage from "./../BackdropImage";
 
 const Hero = () => {
+    console.log("Start client/app.js")
   return (
     <AnimatePresence>
       <motion.div

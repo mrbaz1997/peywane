@@ -35,13 +35,21 @@ exports.getWordsAndQuestions = async (req, res) => {
 
         console.log("4. Fetch 3 questions for each word")
         const questions = await pool.query(`
-            SELECT q.passage
-            FROM questions q
+            SELECT
+                q.id AS question_id,
+                q.passage,
+                json_agg(json_build_object('id', a.id, 'text', a.answer_text)) AS answers
+            FROM
+                questions q
+                    JOIN
+                answers a ON q.id = a.question_id
             WHERE q.language_id = 1
-            AND q.question_id not IN (SELECT question_id FROM scores WHERE user_id = $1 AND word_id = ANY($2))
-            ORDER BY q.id
-            LIMIT 3;
-            `, [userId, word.id]);
+              AND q.question_id not IN (SELECT question_id FROM user_answers WHERE user_id = $1 AND word_id = ANY($2))
+            GROUP BY
+                q.id, q.passage
+            ORDER BY
+                q.id
+        `, [userId, word.id]);
 
         console.log("5. Return the words along with their questions")
         console.log(word.rows[0].word)
@@ -51,15 +59,23 @@ exports.getWordsAndQuestions = async (req, res) => {
     }
 };
 
-exports.submitScore = async (req, res) => {
-    const { word_id, question_id, score } = req.body;
+exports.submitAnswer = async (req, res) => {
+    const { word_id, questions_answers } = req.body;
     const userId = req.user.userId;
     try {
-        await pool.query(
-            'INSERT INTO scores (user_id, word_id, question_id, score) VALUES ($1, $2, $3, $4)',
-            [userId, word_id, question_id, score]
-        );
-        res.json({ message: 'Score saved' });
+        let insertQuery = 'INSERT INTO answers (question_id, answer_text) VALUES ';
+        const values = [userId, word_id];
+        let indexer = 2
+        questions_answers.forEach((question, answer) => {
+            insertQuery += `($1, $2, $${++indexer}, $${++indexer}),`;
+            values.push(question);
+            values.push(answer);
+        });
+        insertQuery = insertQuery.slice(0, -1); // Remove the trailing comma
+
+        console.log(insertQuery);
+        await pool.query(insertQuery,values);
+        res.status(201).send('Answers inserted successfully.');
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

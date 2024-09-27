@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "client": "cd client && npm start",
+    "postinstall": "npm run build",
     "build": "npm run install-client && cd client && npm run build",
     "install-client": "cd client && npm install",
+
     "dev": "concurrently \"npm run start\" \"npm run client\"",
-    "test": "jest --passWithNoTests",
-    "postinstall": "npm run build"
+    "client": "cd client && npm start",
+    "test": "jest --passWithNoTests"
   },
   "main": "server.js",
   "dependencies": {

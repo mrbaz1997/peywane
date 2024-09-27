@@ -27,6 +27,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Fallback for API routes that don't exist
 app.use((req, res, next) => {
+    console.log(`Received request: ${req.method} ${req.url}`);
     res.status(404).json({ message: 'API route not found' });
 });
 

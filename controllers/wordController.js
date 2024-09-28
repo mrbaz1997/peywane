@@ -3,7 +3,6 @@ const pool = require('../config/db');
 const new_word_indicator = -2
 let time_out = true
 exports.getWordsAndQuestions = async (req, res) => {
-
     const userId = req.user.userId;
     try {
         console.log("2. Fetch words with `ck_score = -2`")
@@ -36,7 +35,7 @@ exports.getWordsAndQuestions = async (req, res) => {
         console.log("4. Fetch 3 questions for each word")
         const questions = await pool.query(`
             SELECT
-                q.id AS question_id,
+                q.question_id AS question_id,
                 q.passage,
                 json_agg(json_build_object('id', a.id, 'text', a.answer_text)) AS answers
             FROM
@@ -52,8 +51,8 @@ exports.getWordsAndQuestions = async (req, res) => {
         `, [userId, word.id]);
 
         console.log("5. Return the words along with their questions")
-        console.log(word.rows[0].word)
-        res.json({ word: word.rows[0].word, questions: questions.rows });
+        console.log(word.rows[0])
+        res.json({ word: word.rows[0], questions: questions.rows });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -63,17 +62,18 @@ exports.submitAnswer = async (req, res) => {
     const { word_id, questions_answers } = req.body;
     const userId = req.user.userId;
     try {
-        let insertQuery = 'INSERT INTO answers (question_id, answer_text) VALUES ';
-        const values = [userId, word_id];
-        let indexer = 2
-        questions_answers.forEach((question, answer) => {
-            insertQuery += `($1, $2, $${++indexer}, $${++indexer}),`;
+        let insertQuery = 'INSERT INTO user_answers (user_id, word_id, lang_id, question_id, answer_id) VALUES ';
+        const values = [userId, word_id, 1];
+        let indexer = 3
+        Object.entries(questions_answers).forEach(([question, answer]) => {
+            insertQuery += `($1, $2,$3, $${++indexer}, $${++indexer}),`;
             values.push(question);
             values.push(answer);
         });
         insertQuery = insertQuery.slice(0, -1); // Remove the trailing comma
 
         console.log(insertQuery);
+        console.log(values);
         await pool.query(insertQuery,values);
         res.status(201).send('Answers inserted successfully.');
     } catch (err) {

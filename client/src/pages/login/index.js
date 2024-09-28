@@ -18,7 +18,7 @@ const Login = () => {
   const onSubmit = async (formData) => {
     setIsLoading(true);
     try {
-      const response = await networkLogin(formData);
+      const response = await networkLogin( formData);
       const token = response.data.token || response.headers["Authorization"];
 
       if (token) {

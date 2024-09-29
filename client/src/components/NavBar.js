@@ -16,7 +16,7 @@ const NavBar = () => {
     const themeSaved = localStorage.getItem("theme");
     htmlElem.setAttribute("data-theme", themeSaved);
     setCurrentTheme(themeSaved);
-  }, []);
+  },  [htmlElem]);
   return (
     <div className="navbar bg-base-100 sticky top-0 inset-x-0 mb-10 bg-[var(--fallback-b1,oklch(var(--b1)/1))]">
       <div className="flex-1">

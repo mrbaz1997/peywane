@@ -7,7 +7,7 @@ exports.getWordsAndQuestions = async (req, res) => {
     try {
         console.log("2. Fetch words with `ck_score = -2`")
         const word = await pool.query(`
-            SELECT w.id and w.word
+            SELECT w.id , w.word
             FROM words w
             WHERE length(w.word) < 6
             AND w.ck_score = $1

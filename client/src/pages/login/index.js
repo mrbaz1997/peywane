@@ -36,7 +36,9 @@ const Login = () => {
         /*setError("apiError", {
           message: "ئیمەیڵ یان وشەی نهێنی هەڵەیە.",
         });*/
-      } else {
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      }else {
         console.error("An error occurred:", error.message);
         // setError("apiError", { message: "هەڵە ڕوویدا، تکایە دوبارە هەوڵ بدە." });
       }
@@ -56,7 +58,7 @@ const Login = () => {
       <div className="hero-content flex-col lg:flex-row-reverse max-w-3xl">
         <div className="text-center lg:text-right">
           <h1 className="text-5xl font-bold text-balance leading-[60px]">
-            ئێستا بچۆرە ژوورەوە!
+            چوونەژوور
           </h1>
           <p className="py-6">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
@@ -68,17 +70,17 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control">
               <label className="label font-harmattan">
-                <span className="label-text">ئیمەیڵ</span>
+                <span className="label-text">ئیمەیل</span>
               </label>
               <input
                 type="email"
-                placeholder="ئیمەیڵەکەت بنووسە"
+                placeholder="ئیمەیلەکەت بنووسە"
                 className="input input-bordered font-harmattan"
                 {...register("email", {
-                  required: { value: true, message: "نوسینی ئیمەیڵ پێویستە !" },
+                  required: { value: true, message: "نووسینی ئیمەیل پێویستە !" },
                   pattern: {
                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "فۆرماتێکی ئیمەیڵ نادروستە !",
+                    message: "ئیمەیلەکەت هەڵەیە !",
                   },
                 })}
               />
@@ -101,12 +103,12 @@ const Login = () => {
               </label>
               <input
                 type="password"
-                placeholder="وشەی نهێنیەکەت بنووسە"
+                placeholder="تێپەڕوشەکەت بنووسە"
                 className="input input-bordered font-harmattan"
                 {...register("password_hash", {
                   required: {
                     value: true,
-                    message: "وشەی نهێنی پێویستە !",
+                    message: "تێپەڕوشە پێویستە!",
                   },
                 })}
               />
@@ -140,7 +142,7 @@ const Login = () => {
                 {isShowLoading ? (
                   <span className="loading loading-dots loading-md" />
                 ) : (
-                  <span className="contents">چوونەژوورەوە</span>
+                  <span className="contents">چوونەژوور</span>
                 )}
               </button>
             </div>

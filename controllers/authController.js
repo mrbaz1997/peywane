@@ -36,6 +36,6 @@ exports.signin = async (req, res) => {
         });
         res.json({ token });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message, message:'DB host:' ${process.env.DB_HOST} });
     }
 };

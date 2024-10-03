@@ -1,16 +1,19 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-const Radio = ({ name, className = "", label }) => {
+const Radio = ({ name, className = "", label, ...reset }) => {
   return (
-    <label className="flex items-center gap-2">
-      <input
-        type="radio"
-        name={name}
-        className={twMerge(`radio `, className)}
-      />
-      <span>{label}</span>
-    </label>
+    <span>
+      <label className="flex items-center gap-2 w-fit">
+        <input
+          type="radio"
+          name={name}
+          className={twMerge(`radio `, className)}
+          {...reset}
+        />
+        <span>{label}</span>
+      </label>
+    </span>
   );
 };
 

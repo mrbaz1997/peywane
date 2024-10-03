@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 import fluid, { extract } from "fluid-tailwind";
-import { themes } from "./src/configs/theme";
+import { themes } from "./src/styles";
 
 module.exports = {
   content: ["./src/**/*.{html,js}", extract],

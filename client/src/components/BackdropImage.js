@@ -9,7 +9,7 @@ const BackdropImage = () => {
       alt="backdrop"
       className={twMerge(
         `fixed -z-10 size-full object-cover transition-all duration-500`,
-        `${!isLoaded ? "blur-md" : ""}`
+        `${!isLoaded ? "blur-md opacity-0" : ""}`
       )}
       onLoad={() => setIsLoaded(true)}
     />

@@ -38,26 +38,26 @@ const Toast = ({ isShow, type, content }) => {
         >
           <div
             role="alert"
-            class={twMerge(
+            className={twMerge(
               "alert",
-              type == "info"
+              type === "info"
                 ? "alert-info"
-                : type == "error"
+                : type === "error"
                 ? "alert-error"
-                : type == "warning"
+                : type === "warning"
                 ? "alert-warning"
-                : type == "success"
+                : type === "success"
                 ? "alert-success"
                 : ""
             )}
           >
-            {type == "info" ? (
+            {type === "info" ? (
               <InfoIcon />
-            ) : type == "error" ? (
+            ) : type === "error" ? (
               <ErrorIcon />
-            ) : type == "warning" ? (
+            ) : type === "warning" ? (
               <WarningIcon />
-            ) : type == "success" ? (
+            ) : type === "success" ? (
               <SuccessIcon />
             ) : null}
             {content}

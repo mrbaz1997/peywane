@@ -1,6 +1,7 @@
 const pool = require('../config/db');
 // const { is24HoursPassed } = require('../utils/timeUtils');
 const new_word_indicator = -2
+const inappropriate_word = -1
 let time_out = true
 exports.getWordsAndQuestions = async (req, res) => {
     const userId = req.user.userId;
@@ -10,11 +11,11 @@ exports.getWordsAndQuestions = async (req, res) => {
             SELECT w.id , w.word
             FROM words w
             WHERE length(w.word) < 6
-            AND w.ck_score = $1
-            AND w.id NOT IN (SELECT word_id FROM user_day_words)
+            AND w.ck_score != $1
+            AND w.id NOT IN (select word_id from user_answers where user_id = $2 group by word_id)
             ORDER BY RANDOM()
             LIMIT 1
-            `, [new_word_indicator]);
+            `, [inappropriate_word, userId]);
 
         console.log("3. Save the word IDs in the `user_day_words` table")
         if(time_out){

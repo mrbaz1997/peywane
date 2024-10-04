@@ -135,6 +135,7 @@ const Login = () => {
               </label>
               <input
                 type="password"
+                autoComplete="on"
                 placeholder="تێپەڕوشەکەت بنووسە"
                 className="input input-bordered font-harmattan"
                 {...register("password_hash", {

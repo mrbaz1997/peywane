@@ -1,12 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 
-import fluid, { extract } from "fluid-tailwind";
 import { themes } from "./src/styles";
 
 module.exports = {
-  content: ["./src/**/*.{html,js}", extract],
+  content: ["./src/**/*.{html,js}"],
 
-  plugins: [require("daisyui"), require("@tailwindcss/typography"), fluid],
+  plugins: [require("daisyui"), require("@tailwindcss/typography")],
 
   // daisyUI config (optional - here are the default values)
   daisyui: {

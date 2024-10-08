@@ -85,12 +85,12 @@ const Login = () => {
           <h1 className="text-5xl font-bold text-balance leading-[60px] mb-20">
             چوونەژوور
           </h1>
-          <div className="mx-auto">
-            <span>نێونووسینتان نەکردووە؟ </span>
-            <Link to={"/signup"} className="link link-primary no-underline">
-              نێونووسین
-            </Link>
-          </div>
+          {/*<div className="mx-auto">*/}
+          {/*  <span>نێونووسینتان نەکردووە؟ </span>*/}
+          {/*  <Link to={"/signup"} className="link link-primary no-underline">*/}
+          {/*    نێونووسین*/}
+          {/*  </Link>*/}
+          {/*</div>*/}
           {/* <p className="py-6">
             Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et

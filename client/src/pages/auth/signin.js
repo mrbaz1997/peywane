@@ -1,11 +1,13 @@
+import { motion } from "framer-motion";
 import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { networkSignIn } from "../../network";
 import { Link, useNavigate, useNavigation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import useToast from "../../hooks/useToast";
 import Toast from "../../components/common/Toast";
+import useToast from "../../hooks/useToast";
+import { networkSignIn } from "../../network";
+import Input from "./../../components/common/Input";
+import PasswordInput from "./../../components/common/PasswordInput";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -97,71 +99,37 @@ const Login = () => {
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <div className="form-control">
-              <label className="label font-harmattan">
-                <span className="label-text">ئیمەیل</span>
-              </label>
-              <input
-                type="email"
-                placeholder="ئیمەیلەکەت بنووسە"
-                className="input input-bordered font-harmattan"
-                {...register("email", {
-                  required: {
-                    value: true,
-                    message: "نووسینی ئیمەیل پێویستە !",
-                  },
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "ئیمەیلەکەت هەڵەیە !",
-                  },
-                })}
-              />
-              <AnimatePresence>
-                {!!errors?.email?.message && (
-                  <motion.label
-                    initial={{ scaleY: 0, opacity: 0 }}
-                    animate={{ scaleY: 1, opacity: 1 }}
-                    exit={{ opacity: 0, scaleY: 0 }}
-                    className="label-text text-error mr-1 px-2 font-harmattan"
-                  >
-                    {errors?.email?.message}
-                  </motion.label>
-                )}
-              </AnimatePresence>
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-harmattan">وشەی نهێنی</span>
-              </label>
-              <input
-                type="password"
-                placeholder="تێپەڕوشەکەت بنووسە"
-                className="input input-bordered font-harmattan"
-                {...register("password_hash", {
-                  required: {
-                    value: true,
-                    message: "تێپەڕوشە پێویستە!",
-                  },
-                })}
-              />
-              <AnimatePresence>
-                {!!errors?.password_hash?.message && (
-                  <motion.label
-                    initial={{ scaleY: 0, opacity: 0 }}
-                    animate={{ scaleY: 1, opacity: 1 }}
-                    exit={{ opacity: 0, scaleY: 0 }}
-                    className="label-text text-error mt-1 px-2 font-harmattan"
-                  >
-                    {errors?.password_hash?.message}
-                  </motion.label>
-                )}
-              </AnimatePresence>
-              {/* <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label> */}
-            </div>
+            <Input
+              type="email"
+              helperText={errors?.email?.message}
+              label={"ئیمەیل"}
+              register={register("email", {
+                required: {
+                  value: true,
+                  message: "نووسینی ئیمەیل پێویستە !",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "ئیمەیلەکەت هەڵەیە !",
+                },
+              })}
+              placeholder="ئیمەیلەکەت بنووسە"
+            />
+            <PasswordInput
+              helperText={errors?.password_hash?.message}
+              label={"وشەی نهێنی"}
+              register={register("password_hash", {
+                required: {
+                  value: true,
+                  message: "تێپەڕوشە پێویستە!",
+                },
+                min: {
+                  value: 4,
+                  message: "تێپەڕوشەکە نابێ کەمتر لە ٤ پیت بێ",
+                },
+              })}
+              placeholder="تێپەڕوشەکەت بنووسە"
+            />
             <div className="form-control mt-6">
               <button
                 type="submit"

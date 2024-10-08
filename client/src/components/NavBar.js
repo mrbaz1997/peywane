@@ -19,7 +19,7 @@ const NavBar = () => {
   }, [htmlElem]);
 
   return (
-    <div className="navbar bg-base-100 sticky top-0 inset-x-0 mb-10 bg-[var(--fallback-b1,oklch(var(--b1)/1))]">
+    <div className="navbar bg-base-100 sticky top-0 inset-x-0 mb-1 bg-[var(--fallback-b1,oklch(var(--b1)/1))]">
       <div className="flex-1">
         <Link to={"/"} className="btn btn-ghost text-xl">
           پەیوانە-

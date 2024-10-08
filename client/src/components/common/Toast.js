@@ -32,8 +32,6 @@ const Toast = ({ isShow, type, content }) => {
           }}
           transition={{
             type: "spring",
-            damping: 10,
-            stiffness: 90,
           }}
         >
           <div

@@ -8,6 +8,7 @@ import Input from "../../components/common/Input";
 import Toast from "../../components/common/Toast";
 import useToast from "../../hooks/useToast";
 import { networkSignUp } from "../../network";
+import PasswordInput from "../../components/common/PasswordInput";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -109,10 +110,9 @@ const SignUp = () => {
               })}
               helperText={errors?.email?.message}
             />
-            <Input
+            <PasswordInput
               label={"تێپەڕوشە "}
               placeholder={"تێپەڕوشەکەت بنووسە"}
-              type="password"
               register={register("password_hash", {
                 required: {
                   value: true,

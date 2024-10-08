@@ -47,7 +47,7 @@ const Hero = () => {
                 onClick={handleNavigation}
                 className="btn btn-primary hover:scale-110 no-underline text-black mt-10"
               >
-                بڕۆ بۆ بەشی پرسیارەکان
+                چونەژوور
               </button>
             </div>
           </div>

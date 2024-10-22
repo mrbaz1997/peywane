@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useNavigation } from "react-router";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import Input from "../../components/common/Input";
@@ -9,9 +9,12 @@ import Toast from "../../components/common/Toast";
 import useToast from "../../hooks/useToast";
 import { networkSignUp } from "../../network";
 import PasswordInput from "../../components/common/PasswordInput";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const { state: pageState } = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const { content, isShow, type, showToast } = useToast();
@@ -23,22 +26,22 @@ const SignUp = () => {
 
   const onSubmit = async (formData) => {
     setIsLoading(true);
-    console.log(formData);
     try {
       const res = await networkSignUp(formData);
-      console.log("res.status:", res.status);
 
       if (res.status === 200) {
         const { password_hash, ...data } = res.data;
-        localStorage.setItem("user", JSON.stringify(data));
-      }
 
-      showToast({
-        content: <p>به خێر بێی بۆ پەیوانە</p>,
-        duration: 3000,
-        type: "success",
-        onClose: () => navigate("/word"),
-      });
+        showToast({
+          content: <p>به خێر بێی بۆ پەیوانە</p>,
+          duration: 3000,
+          type: "success",
+          onClose: () => {
+            login(data);
+            navigate("/word");
+          },
+        });
+      }
     } catch (error) {
       console.error(error);
       showToast({

@@ -2,16 +2,20 @@ import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackdropImage from "./../BackdropImage";
+import { useAuth } from "./../../contexts/AuthContext";
 
 const Hero = () => {
   const timeoutRef = useRef();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+
   const [isExiting, setIsExiting] = useState(false);
 
   const handleNavigation = () => {
     setIsExiting(true);
+
     timeoutRef.current = setTimeout(() => {
-      navigate("/signin");
+      navigate(isAuthenticated() ? "/word" : "/signin");
     }, 200);
   };
 

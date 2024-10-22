@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import Toast from "../../components/common/Toast";
+import { useAuth } from "../../contexts/AuthContext";
 import useToast from "../../hooks/useToast";
 import { networkSignIn } from "../../network";
 import Input from "./../../components/common/Input";
@@ -11,6 +12,7 @@ import PasswordInput from "./../../components/common/PasswordInput";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login, user } = useAuth();
   const { state: pageState } = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
   const { content, isShow, type, showToast } = useToast();
@@ -26,7 +28,6 @@ const Login = () => {
     try {
       const res = await networkSignIn(formData);
       const token = res.data.token || res.headers["Authorization"];
-      console.log("token:", token);
 
       if (token) {
         localStorage.setItem("jwtToken", token);
@@ -34,7 +35,10 @@ const Login = () => {
         showToast({
           content: <p>بەخێر بێن </p>,
           type: "success",
-          onClose: () => navigate("/word"),
+          onClose: () => {
+            login(user || {});
+            navigate("/word");
+          },
         });
       } else {
         console.error("Token not found in response");

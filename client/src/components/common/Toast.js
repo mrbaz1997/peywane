@@ -37,7 +37,7 @@ const Toast = ({ isShow, type, content }) => {
           <div
             role="alert"
             className={twMerge(
-              "alert",
+              "alert font-harmattan",
               type === "info"
                 ? "alert-info"
                 : type === "error"

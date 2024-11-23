@@ -1,11 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import Hero from "../components/sections/Hero";
+import { networkGetWords } from "../network";
 import SignIn from "../pages/auth/signin";
 import SignUp from "../pages/auth/signup";
 import Word from "../pages/word";
 import MainLayout from "./../layouts/mainLayout";
-import ProtectedRouteProvider from "./ProtectedRouteProvider";
-import { networkGetWords } from "../network";
 
 const routes = [
   {
@@ -22,17 +21,12 @@ const routes = [
     element: <SignUp />,
   },
   {
-    element: <ProtectedRouteProvider />,
+    element: <MainLayout />,
     children: [
       {
-        element: <MainLayout />,
-        children: [
-          {
-            path: "/word",
-            element: <Word />,
-            loader: networkGetWords,
-          },
-        ],
+        path: "/word",
+        element: <Word />,
+        loader: networkGetWords,
       },
     ],
   },

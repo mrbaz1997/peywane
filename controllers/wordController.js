@@ -36,7 +36,7 @@ exports.getWordsAndQuestions = async (req, res) => {
             SELECT
                 q.question_id AS question_id,
                 q.passage,
-                json_agg(json_build_object('id', a.id, 'text', a.answer_text)) AS answers
+                json_agg(json_build_object('id', a.id, 'text', a.answer_text) ORDER BY a.order) AS answers
             FROM
                 questions q
                     JOIN
@@ -59,6 +59,12 @@ exports.getWordsAndQuestions = async (req, res) => {
 
 exports.submitAnswer = async (req, res) => {
     const { word_id, questions_answers } = req.body;
+
+    if(!word_id || !questions_answers){
+        res.status(201).send('word skip!');
+        return;
+    }
+
     const userId = req.user.userId;
     try {
         let insertQuery = 'INSERT INTO user_answers (user_id, word_id, lang_id, question_id, answer_id) VALUES ';

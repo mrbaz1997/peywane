@@ -9,6 +9,7 @@ import useToast from "../../hooks/useToast";
 import { networkSignIn } from "../../network";
 import Input from "./../../components/common/Input";
 import PasswordInput from "./../../components/common/PasswordInput";
+import GoogleAuth from './GoogleAuth';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -77,7 +78,16 @@ const Login = () => {
   };
 
   const isShowLoading = pageState !== "idle" || isLoading;
-
+  const googleLogin = () => {
+    console.log("On Google Log click")
+    return (
+        <div>
+          <h2>Hey, Sign In</h2>
+          <GoogleAuth />
+          {/* Your other sign-in methods */}
+        </div>
+    );
+  };
   return (
     <motion.div
       initial={{ transform: "translateX(100%)" }}
@@ -102,22 +112,25 @@ const Login = () => {
           </p> */}
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+          <button onClick={googleLogin}>
+            Sign in with Google
+          </button>
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <Input
-              type="email"
-              helperText={errors?.email?.message}
-              label={"ئیمەیل"}
-              register={register("email", {
-                required: {
-                  value: true,
-                  message: "نووسینی ئیمەیل پێویستە !",
-                },
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: "ئیمەیلەکەت هەڵەیە !",
-                },
-              })}
-              placeholder="ئیمەیلەکەت بنووسە"
+                type="email"
+                helperText={errors?.email?.message}
+                label={"ئیمەیل"}
+                register={register("email", {
+                  required: {
+                    value: true,
+                    message: "نووسینی ئیمەیل پێویستە !",
+                  },
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "ئیمەیلەکەت هەڵەیە !",
+                  },
+                })}
+                placeholder="ئیمەیلەکەت بنووسە"
             />
             <PasswordInput
               helperText={errors?.password_hash?.message}
@@ -136,24 +149,24 @@ const Login = () => {
             />
             <div className="form-control mt-6">
               <button
-                type="submit"
-                className={twMerge(
-                  "btn btn-primary",
-                  isShowLoading ? "btn-disabled" : ""
-                )}
-                disabled={isShowLoading}
+                  type="submit"
+                  className={twMerge(
+                      "btn btn-primary",
+                      isShowLoading ? "btn-disabled" : ""
+                  )}
+                  disabled={isShowLoading}
               >
                 {isShowLoading ? (
-                  <span className="loading loading-dots loading-md" />
+                    <span className="loading loading-dots loading-md"/>
                 ) : (
-                  <span className="contents">چوونەژوور</span>
+                    <span className="contents">چوونەژوور</span>
                 )}
               </button>
             </div>
           </form>
         </div>
       </div>
-      <Toast content={content} isShow={isShow} type={type} />
+      <Toast content={content} isShow={isShow} type={type}/>
     </motion.div>
   );
 };

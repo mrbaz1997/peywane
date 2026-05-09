@@ -52,7 +52,7 @@ const Word = () => {
           <div
             ref={containerRef}
             style={{ height: "calc(100dvh - 207px)" }}
-            className="overflow-auto *:mb-16"
+            className="overflow-auto *:mb-10"
           >
             {data?.questions?.map((quesItem, index) => (
               <div
@@ -66,8 +66,8 @@ const Word = () => {
                     : "first:*:before:bg-[var(--accent-color)]"
                 )}
               >
-                <p className="text-lg font-bold">{quesItem?.passage}</p>
-                <div className="flex flex-wrap gap-10">
+                <p className="text-lg font-bold mb-2 mt-0">{quesItem?.passage}</p>
+                <div className="flex flex-wrap gap-3">
                   {quesItem?.answers?.map((answerItem) => (
                     <Radio
                       key={answerItem.id}

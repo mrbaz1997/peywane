@@ -22,11 +22,18 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
+app.set('trust proxy', 1);
+
 // Session middleware
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true,
+        sameSite: 'lax',
+    },
 }));
 
 // Passport middleware

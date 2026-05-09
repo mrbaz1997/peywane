@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
+const rateLimit = require('express-rate-limit');
 const passport = require('./passport'); // Include Passport configuration
 const authRoutes = require('./routes/authRoutes');
 const wordRoutes = require('./routes/wordRoutes');
@@ -12,6 +13,13 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per window
+});
+
+app.use(limiter);
 
 // Session middleware
 app.use(session({

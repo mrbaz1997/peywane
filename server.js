@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
 const rateLimit = require('express-rate-limit');
+const lusca = require('lusca');
 const passport = require('./passport'); // Include Passport configuration
 const authRoutes = require('./routes/authRoutes');
 const wordRoutes = require('./routes/wordRoutes');
@@ -32,11 +33,18 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session);
 
+// CSRF protection middleware
+app.use(lusca.csrf());
+
 app.use('/auth', authRoutes);
 app.use('/words', wordRoutes);
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 app.get('/api/data', (req, res) => {
     res.json({ message: 'Hello from the backend!' });
+});
+
+app.get('/api/csrf-token', (req, res) => {
+    res.json({ csrfToken: req.csrfToken() });
 });
 
 app.get('/*', (req, res) => {
